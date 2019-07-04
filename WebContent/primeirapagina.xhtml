@@ -10,58 +10,93 @@
 </h:head>
 
 <h:body>
-	<h1>Ola</h1>
-
 	<h:form id="FormPessoa">
 
-		<br />
-		<h:outputLabel value="ID: " />
-		<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+		<h:panelGrid columns="2">
 
-		<br />
-		<h:outputLabel value="Nome: " />
-		<h:inputText value="#{pessoaBean.pessoa.nome}" />
+			<f:facet name="header">
+				<h:outputText value="Cadastro em JSF " />
+			</f:facet>
 
-		<br />
-		<h:outputLabel value="Sobrenome: " />
-		<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
+			<h:outputLabel value="ID: " />
+			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
-		<br />
-		<h:outputLabel value="Idade: " />
-		<h:inputText value="#{pessoaBean.pessoa.idade}" />
+			<h:outputLabel value="Nome: " />
+			<h:inputText value="#{pessoaBean.pessoa.nome}" />
 
-		<br />
-		<h:commandButton value="Salvar" action="#{pessoaBean.salvarAtualiza}" />
-		<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
-		<h:commandButton value="Remove" action="#{pessoaBean.remove}" />
+			<h:outputLabel value="Sobrenome: " />
+			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
 
-		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa">
+			<h:outputLabel value="Idade: " />
+			<h:inputText value="#{pessoaBean.pessoa.idade}" />
+			
+			<h:outputLabel value="Sexo: "/>
+			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" required="false">
+				<f:selectItem itemLabel="[-- Selecione --]" noSelectionOption="true"/>
+				<f:selectItem itemLabel="Masculino" itemValue="MASCULINO"/>
+				<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Curso Desejado: "/>
+			<h:selectManyMenu id="campoCurso" value="#{pessoaBean.pessoa.curso}" style="height:150px;">
+				<f:selectItem itemValue="Hibernate"/>
+				<f:selectItem itemValue="Spring"/>
+				<f:selectItem itemValue="Jpa"/>
+				<f:selectItem itemValue="Jsf"/>
+			</h:selectManyMenu>
+			
+			<h:outputLabel value="Ativo: "/>
+			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
+			
+			<h:outputLabel/>
+			<h:panelGroup>
+				<h:commandButton value="Salvar" action="#{pessoaBean.salvarAtualiza}" />
+				<h:commandButton value="Novo" action="#{pessoaBean.novo}" />
+				<h:commandButton value="Remove" action="#{pessoaBean.remove}" />
+			</h:panelGroup>
 
+		</h:panelGrid>
+
+		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="2" cellpadding="6">
+		
+		<f:facet name="header">
+			Lista de Pessoas Cadastradas
+		</f:facet>
 			<h:column>
+				<f:facet name="header">ID</f:facet>
 				<h:outputText value="#{pessoa.id}" />
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{pessoa.nome}" />
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Sobrenome</f:facet>
 				<h:outputText value="#{pessoa.sobrenome}" />
 			</h:column>
 
 			<h:column>
+				<f:facet name="header">Idade</f:facet>
 				<h:outputText value="#{pessoa.idade}" />
+			</h:column>
+					
+			<h:column>
+				<f:facet name="header">Editar</f:facet>
+				<h:commandLink>
+					<h:graphicImage value="/resources/img/editar16.png" height="20" width="20"/>
+					<f:setPropertyActionListener value="#{pessoa}"
+						target="#{pessoaBean.pessoa}" />
+				</h:commandLink>
 			</h:column>
 
 			<h:column>
-				<h:commandLink value="Editar">
-					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}" />
-				</h:commandLink>
-			</h:column>
-			
-			<h:column>
-				<h:commandLink value="Excluir" action="#{pessoaBean.remove}">
-					<f:setPropertyActionListener value="#{pessoa}" target="#{pessoaBean.pessoa}"/>
+				<f:facet name="header">Excluir</f:facet>
+				<h:commandLink action="#{pessoaBean.remove}" >
+				<h:graphicImage value="/resources/img/excluir16.png" height="20" width="20"/>
+					<f:setPropertyActionListener value="#{pessoa}"
+						target="#{pessoaBean.pessoa}" />
 				</h:commandLink>
 			</h:column>
 
