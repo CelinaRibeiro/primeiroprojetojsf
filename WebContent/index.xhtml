@@ -5,13 +5,26 @@
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-	<title>Teste</title>
+	<title>Login</title>
 </h:head>
 
 <h:body>
 
-	<h:form>
-		<h1>Página Inicial 2</h1>
+	<h:form id="formLogin" style="margin-top:22%; margin-left:40%;">
+		<h1>Realize o login</h1>
+		
+		<h:panelGrid columns="2">
+		
+			<h:outputLabel value="Login: "/>
+			<h:inputText value="#{pessoaBean.pessoa.login}"/>
+			
+			<h:outputLabel value="Senha: "/>
+			<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
+			
+			<h:commandButton value="Acessar" action="#{pessoaBean.logar}"/>
+			
+		</h:panelGrid>
+		
 		<h:commandLink value="Navegar" action="primeirapagina"/>
 	</h:form>
 
