@@ -10,9 +10,18 @@
 </h:head>
 
 <h:body>
-	<h:form id="FormPessoa">
 
-		<h:panelGrid columns="2">
+	<h:form id="formMenu">
+		<h:commandLink value="Administração" action="primeirapagina" style="margin-left:0.3cm;"/>
+		<h:commandLink value="Lançamentos" action="lancamento" style="margin-left:0.3cm;"/>
+		<h:commandLink value="Trocar Usuário" action="index" style="margin-left:0.3cm;"/>
+	</h:form>
+
+	<h:form id="formPessoa">
+	
+	<h:messages infoStyle="color:green;"/>
+
+		<h:panelGrid columns="2" rendered="true">
 
 			<f:facet name="header">
 				<h:outputText value="Cadastro de Usuário " />
@@ -37,14 +46,7 @@
 				<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
 			</h:selectOneMenu>
 			
-			<h:outputLabel value="Perfil Usuário: "/>
-			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" required="false">
-				<f:selectItem itemLabel="[-- Selecione --]" noSelectionOption="true"/>
-				<f:selectItem itemLabel="Administrador" itemValue="ADMINISTRADOR"/>
-				<f:selectItem itemLabel="Secretario" itemValue="SECRETARIO"/>
-				<f:selectItem itemLabel="Recepcionista" itemValue="RECEPCIONISTA"/>
-			</h:selectOneMenu>
-			
+				
 			<h:outputLabel value="Curso Desejado: "/>
 			<h:selectManyMenu id="campoCurso" value="#{pessoaBean.pessoa.curso}" style="height:150px;">
 				<f:selectItem itemValue="Hibernate"/>
@@ -62,12 +64,37 @@
 			<h:outputLabel value="Senha: "/>
 			<h:inputSecret value="#{pessoaBean.pessoa.senha}"/>
 			
-			<h:outputLabel/>
+			<h:outputLabel value="Perfil Usuário: "/>
+			<h:selectOneMenu id="perfil" value="#{pessoaBean.pessoa.perfilUser}" required="false">
+				<f:selectItem itemLabel="[-- Selecione --]" noSelectionOption="true"/>
+				<f:selectItem itemValue="ADMINISTRADOR" itemLabel="Administrador" />
+				<f:selectItem itemValue="SECRETARIO" itemLabel="Secretario" />
+				<f:selectItem itemValue="RECEPCIONISTA" itemLabel="Recepcionista" />
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Programador: "/>
+			<h:selectOneRadio value="#{pessoaBean.pessoa.nivelProgamador}" layout="pageDirection">
+				<f:selectItem itemValue="J" itemLabel="Junior"/>
+				<f:selectItem itemValue="P" itemLabel="Pleno"/>
+				<f:selectItem itemValue="S" itemLabel="Sênior"/>
+				<f:selectItem itemValue="E" itemLabel="Expecialista"/>
+			</h:selectOneRadio>
+			
+			<h:outputLabel value="Linguagens:" />
+			<h:selectManyCheckbox value="#{pessoaBean.pessoa.linguagens}">
+				<f:selectItem itemValue="1" itemLabel="Java"/>
+				<f:selectItem itemValue="2" itemLabel="PHP"/>
+				<f:selectItem itemValue="3" itemLabel="Pyton"/>
+				<f:selectItem itemValue="4" itemLabel="C#"/>
+				<f:selectItem itemValue="5" itemLabel="Cobol"/>
+			</h:selectManyCheckbox>
+			
+			<h:outputLabel />
 			<h:panelGroup>
 				<h:commandButton action="#{pessoaBean.novo}" image="/resources/img/Novo.png" title="Novo"/>
-				<h:commandButton action="#{pessoaBean.salvarAtualiza}" image="/resources/img/Salvar.png" title="Salvar"/>
-				<h:commandButton action="#{pessoaBean.remove}" image="/resources/img/Deletar.png" title="Remove"/>
-				<h:commandButton type="reset" image="/resources/img/Limpar.png" title="Limpar"/>
+				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.salvarAtualiza}" image="/resources/img/Salvar.png" title="Salvar"/>
+				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.remove}" image="/resources/img/Deletar.png" title="Remove" />
+				<h:commandButton style="margin-left:0.3cm;" type="reset" image="/resources/img/Limpar.png" title="Limpar"/>
 			</h:panelGroup>
 
 		</h:panelGrid>
@@ -99,7 +126,7 @@
 					
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink>
+				<h:commandLink title="Editar">
 					<h:graphicImage value="/resources/img/Editar.png" height="25" width="25"/>
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
@@ -109,7 +136,8 @@
 			<h:column>
 				<f:facet name="header">Excluir</f:facet>
 				<h:commandLink action="#{pessoaBean.remove}" >
-				<h:graphicImage value="/resources/img/Deletar.png" height="25" width="25"/>
+				<h:graphicImage url="resources/img/Deletar.png" width="25"
+						height="25" />
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
 				</h:commandLink>
