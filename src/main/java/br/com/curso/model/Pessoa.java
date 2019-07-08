@@ -1,11 +1,14 @@
 package br.com.curso.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Pessoa implements Serializable {
@@ -21,6 +24,9 @@ public class Pessoa implements Serializable {
 	private String sobrenome;
 	
 	private Integer idade;
+	
+	@Temporal(TemporalType.DATE)
+	private Date dataNacimento = new Date();
 	
 	private String sexo;
 	
@@ -70,6 +76,14 @@ public class Pessoa implements Serializable {
 		this.idade = idade;
 	}
 	
+	public Date getDataNacimento() {
+		return dataNacimento;
+	}
+
+	public void setDataNacimento(Date dataNacimento) {
+		this.dataNacimento = dataNacimento;
+	}
+
 	public String getSexo() {
 		return sexo;
 	}
@@ -134,6 +148,7 @@ public class Pessoa implements Serializable {
 	public void setLinguagens(Integer[] linguagens) {
 		this.linguagens = linguagens;
 	}
+	
 
 	@Override
 	public int hashCode() {

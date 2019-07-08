@@ -2,7 +2,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:ui = "http://java.sun.com/jsf/facelets">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -11,11 +12,7 @@
 
 <h:body>
 
-	<h:form id="formMenu">
-		<h:commandLink value="Administração" action="primeirapagina" style="margin-left:0.3cm;"/>
-		<h:commandLink value="Lançamentos" action="lancamento" style="margin-left:0.3cm;"/>
-		<h:commandLink value="Trocar Usuário" action="index" style="margin-left:0.3cm;"/>
-	</h:form>
+	<ui:include src="/menu.xhtml"/>
 
 	<h:form id="formPessoa">
 	
@@ -31,7 +28,10 @@
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
 
 			<h:outputLabel value="Nome: " />
-			<h:inputText value="#{pessoaBean.pessoa.nome}" />
+			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário"
+				validatorMessage="Nome tem que ter no mínino 3 letras">
+				<f:validateLength minimum="3" maximum="50"/>
+			</h:inputText>
 
 			<h:outputLabel value="Sobrenome: " />
 			<h:inputText value="#{pessoaBean.pessoa.sobrenome}" />
@@ -46,6 +46,10 @@
 				<f:selectItem itemLabel="Feminino" itemValue="FEMININO" />
 			</h:selectOneMenu>
 			
+			<h:outputLabel value="Nascimento: "/>	
+			<h:inputText value="#{pessoaBean.pessoa.dataNacimento}" converterMessage="Data de nascimento errada!">
+				<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" timeZone="GMT-03:00"/>
+			</h:inputText>		
 				
 			<h:outputLabel value="Curso Desejado: "/>
 			<h:selectManyMenu id="campoCurso" value="#{pessoaBean.pessoa.curso}" style="height:150px;">
