@@ -39,6 +39,12 @@
 			<h:outputLabel value="Idade: " />
 			<h:inputText value="#{pessoaBean.pessoa.idade}" />
 			
+			<h:outputLabel value="CPF: "/>
+			<h:inputText value="#{pessoaBean.pessoa.cpf}"/>
+			
+			<h:outputLabel value="Título de eleitor: "/>
+			<h:inputText value="#{pessoaBean.pessoa.tituloEleitoral}"/>
+			
 			<h:outputLabel value="Sexo: "/>
 			<h:selectOneMenu id="campoSexo" value="#{pessoaBean.pessoa.sexo}" required="false">
 				<f:selectItem itemLabel="[-- Selecione --]" noSelectionOption="true"/>
@@ -58,6 +64,36 @@
 				<f:selectItem itemValue="Jpa"/>
 				<f:selectItem itemValue="Jsf"/>
 			</h:selectManyMenu>
+			
+			<h:outputLabel value="CEP: "/>
+			<h:inputText value="#{pessoaBean.pessoa.cep}">
+				<f:ajax event="blur" execute="@this" listener="#{pessoaBean.pesquisaCep}"
+				 render="logradouro complemento bairro localidade uf unidade ibge gia"/>
+			</h:inputText>
+			
+			<h:outputLabel value="Logradouro: "/>
+			<h:inputText value="#{pessoaBean.pessoa.logradouro}" id="logradouro"/>
+			
+			<h:outputLabel value="Complemento: "/>
+			<h:inputText value="#{pessoaBean.pessoa.complemento}" id="complemento"/>
+			
+			<h:outputLabel value="Bairro: "/>
+			<h:inputText value="#{pessoaBean.pessoa.bairro}" id="bairro"/>
+			
+			<h:outputLabel value="Localidade: "/>
+			<h:inputText value="#{pessoaBean.pessoa.localidade}" id="localidade"/>
+			
+			<h:outputLabel value="UF: "/>
+			<h:inputText value="#{pessoaBean.pessoa.uf}" id="uf"/>
+			
+			<h:outputLabel value="Unidade: "/>
+			<h:inputText value="#{pessoaBean.pessoa.unidade}" id="unidade"/>
+			
+			<h:outputLabel value="IBGE: "/>
+			<h:inputText value="#{pessoaBean.pessoa.ibge}" id="ibge"/>
+			
+			<h:outputLabel value="GIA: "/>
+			<h:inputText value="#{pessoaBean.pessoa.gia}" id="gia"/>
 			
 			<h:outputLabel value="Ativo: "/>
 			<h:selectBooleanCheckbox value="#{pessoaBean.pessoa.ativo}"/>
@@ -95,14 +131,23 @@
 			
 			<h:outputLabel />
 			<h:panelGroup>
-				<h:commandButton action="#{pessoaBean.novo}" image="/resources/img/Novo.png" title="Novo"/>
-				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.salvarAtualiza}" image="/resources/img/Salvar.png" title="Salvar"/>
-				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.remove}" image="/resources/img/Deletar.png" title="Remove" />
-				<h:commandButton style="margin-left:0.3cm;" type="reset" image="/resources/img/Limpar.png" title="Limpar"/>
+				<h:commandButton action="#{pessoaBean.novo}" image="/resources/img/Novo.png" value="Novo" id="botaoNovo">
+					<f:ajax execute="botaoNovo" render="@form"/>
+				</h:commandButton>
+				
+				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.salvarAtualiza}" image="/resources/img/Salvar.png" value="Salvar"/>
+				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.remove}" image="/resources/img/Deletar.png" value="Remove" />
+				
+				<h:commandButton style="margin-left:0.3cm;" action="#{pessoaBean.limpar}" image="/resources/img/Limpar.png" value="Limpar" id="botaoLimpar">
+					<f:ajax execute="botaoLimpar" render="@form"/>
+				</h:commandButton>
 			</h:panelGroup>
 
 		</h:panelGrid>
+		
+	</h:form>
 
+	<h:form id="formTable">
 		<h:dataTable value="#{pessoaBean.pessoas}" var="pessoa" border="2" cellpadding="6">
 		
 		<f:facet name="header">
@@ -150,7 +195,7 @@
 		</h:dataTable>
 
 	</h:form>
-
+	
 </h:body>
 
 </html>
