@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:ui = "http://java.sun.com/jsf/facelets">
+    xmlns:ui = "http://java.sun.com/jsf/facelets"
+    xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -29,7 +30,7 @@
 
 			<h:outputLabel value="Nome: " />
 			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário"
-				validatorMessage="Nome tem que ter no mínino 3 letras">
+				validatorMessage="Nome tem que ter no mínino 3 letras" pt:placeholder="Informe o nome do usuário">
 				<f:validateLength minimum="3" maximum="50"/>
 			</h:inputText>
 
@@ -40,7 +41,7 @@
 			<h:inputText value="#{pessoaBean.pessoa.idade}" />
 			
 			<h:outputLabel value="CPF: "/>
-			<h:inputText value="#{pessoaBean.pessoa.cpf}"/>
+			<h:inputText value="#{pessoaBean.pessoa.cpf}" pt:placeholder="Informe o CPF válido"/>
 			
 			<h:outputLabel value="Título de eleitor: "/>
 			<h:inputText value="#{pessoaBean.pessoa.tituloEleitoral}"/>
@@ -129,6 +130,22 @@
 				<f:selectItem itemValue="5" itemLabel="Cobol"/>
 			</h:selectManyCheckbox>
 			
+			<h:outputLabel value="Estados: "/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.estados}" immediate="true" id="comboEstados"
+				converter="estadoConverter">
+				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+				<f:selectItems value="#{pessoaBean.estados}"/>
+				<f:ajax event="change" execute="@this" render="comboCidade"
+				 listener="#{pessoaBean.carregaCidades}"/>
+			</h:selectOneMenu>
+			
+			<h:outputLabel value="Cidades: "/>
+			<h:selectOneMenu value="#{pessoaBean.pessoa.cidades}" id="comboCidade" immediate="true"
+				converter="cidadeConverter">
+				<f:selectItem itemLabel="--[Selecione]--" noSelectionOption="true"/>
+				<f:selectItems value="#{pessoaBean.cidades}"/>
+			</h:selectOneMenu>
+			
 			<h:outputLabel />
 			<h:panelGroup>
 				<h:commandButton action="#{pessoaBean.novo}" image="/resources/img/Novo.png" value="Novo" id="botaoNovo">
@@ -175,7 +192,7 @@
 					
 			<h:column>
 				<f:facet name="header">Editar</f:facet>
-				<h:commandLink title="Editar">
+				<h:commandLink title="Editar" immediate="true" action="#{pessoaBean.editar}">
 					<h:graphicImage value="/resources/img/Editar.png" height="25" width="25"/>
 					<f:setPropertyActionListener value="#{pessoa}"
 						target="#{pessoaBean.pessoa}" />
@@ -184,7 +201,7 @@
 
 			<h:column>
 				<f:facet name="header">Excluir</f:facet>
-				<h:commandLink action="#{pessoaBean.remove}" >
+				<h:commandLink action="#{pessoaBean.remove}" immediate="true" title="Excluir">
 				<h:graphicImage url="resources/img/Deletar.png" width="25"
 						height="25" />
 					<f:setPropertyActionListener value="#{pessoa}"

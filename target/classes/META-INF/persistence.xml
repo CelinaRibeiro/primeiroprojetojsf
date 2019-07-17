@@ -5,6 +5,8 @@
 	<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 	<class>br.com.curso.model.Pessoa</class>
 	<class>br.com.curso.model.Lancamento</class>
+	<class>br.com.curso.model.Estados</class>
+	<class>br.com.curso.model.Cidades</class>
 	
 	<properties>
 		<property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/primeiroprojetojsf3"/>
