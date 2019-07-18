@@ -15,7 +15,7 @@
 
 	<ui:include src="/menu.xhtml"/>
 
-	<h:form id="formPessoa">
+	<h:form id="formPessoa" enctype="multipart/form-data">
 	
 	<h:messages infoStyle="color:green;"/>
 
@@ -27,6 +27,9 @@
 
 			<h:outputLabel value="ID: " />
 			<h:inputText value="#{pessoaBean.pessoa.id}" readonly="true" />
+			
+			<h:outputLabel value="Foto: "/>
+			<h:inputFile id="foto" value="#{pessoaBean.arquivoFoto}"/>
 
 			<h:outputLabel value="Nome: " />
 			<h:inputText value="#{pessoaBean.pessoa.nome}" required="true" requiredMessage="Informe o nome do usuário"
@@ -178,6 +181,14 @@
 			<h:column>
 				<f:facet name="header">Nome</f:facet>
 				<h:outputText value="#{pessoa.nome}" />
+			</h:column>
+			
+			<h:column>
+				<f:facet name="header">Foto</f:facet>
+				<h:commandLink actionListener="#{pessoaBean.download}">
+					<h:graphicImage width="60" height="60" value="#{pessoa.fotoIconBase64}"/>
+					<f:param name="fileDownloadId" value="#{pessoa.id}"/>
+				</h:commandLink>
 			</h:column>
 
 			<h:column>
